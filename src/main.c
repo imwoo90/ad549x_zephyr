@@ -26,5 +26,35 @@ int main(void)
 
 uint32_t MCUPlatformInit(void *pCfg)
 {
-	return 1;
+  return 1;
 }
+
+
+
+
+
+#include <zephyr/drivers/gpio.h>
+
+void led_toggle_point(void *, void *, void *){
+	int ret;
+
+	ret = gpio_pin_configure(DEVICE_DT_GET(DT_NODELABEL(gpio0)), 31, GPIO_OUTPUT);
+	if (ret < 0) {
+		return;
+	}
+
+	while (1) {
+		ret = gpio_pin_toggle(DEVICE_DT_GET(DT_NODELABEL(gpio0)), 31);
+		if (ret < 0) {
+			return;
+		}
+		k_msleep(500);
+	}
+}
+
+K_THREAD_DEFINE(led_toggle_tid, 512,
+                led_toggle_point, NULL, NULL, NULL,
+                10, 0, 0);
+
+
+
