@@ -1,0 +1,23 @@
+/delete-node/ &qspi;
+/delete-node/ &spi3;
+
+/{
+    /delete-node/ leds;
+    /delete-node/ pwmleds;
+    /delete-node/ buttons;
+    /delete-node/ connector;
+    /delete-node/ analog-connector;
+    /delete-node/ aliases;
+};
+
+&spi0 {
+	status = "okay";
+};
+
+&i2c0 {
+	status = "disabled";
+};
+
+&spi1 {
+	status = "disabled";
+};

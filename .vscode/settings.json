@@ -1,0 +1,6 @@
+{
+    "nrf-connect.topdir": "${nrf-connect.sdk:2.4.2}",
+    "nrf-connect.applications": [
+        "${workspaceFolder}"
+    ],
+}
