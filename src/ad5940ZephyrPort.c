@@ -97,15 +97,6 @@ uint32_t AD5940_GetMCUIntFlag(void)
 
 uint32_t AD5940_ClrMCUIntFlag(void)
 {
-    static bool _init = false;
-    if (_init == false) {
-        //set interrupt
-        gpio_pin_configure(INT_PIN, GPIO_INPUT);
-        gpio_pin_interrupt_configure(INT_PIN, GPIO_INT_EDGE_FALLING);
-        gpio_init_callback(&gpio_int_cb, gpio_int_callback, BIT(_INT_GPIO_PIN));
-        gpio_add_callback(_INT_GPIO_PORT, &gpio_int_cb);
-        _init = true;
-    }
     return 1;
 }
 
@@ -114,5 +105,11 @@ uint32_t AD5940_MCUResourceInit(void *pCfg)
     // set cs, rst
     gpio_pin_configure(CS_PIN, GPIO_OUTPUT);
     gpio_pin_configure(RST_PIN, GPIO_OUTPUT);
+
+    //set interrupt
+    gpio_pin_configure(INT_PIN, GPIO_INPUT);
+    gpio_pin_interrupt_configure(INT_PIN, GPIO_INT_EDGE_FALLING);
+    gpio_init_callback(&gpio_int_cb, gpio_int_callback, BIT(_INT_GPIO_PIN));
+    gpio_add_callback(_INT_GPIO_PORT, &gpio_int_cb);
     return 0;
 }
