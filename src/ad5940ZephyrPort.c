@@ -107,7 +107,7 @@ uint32_t AD5940_MCUResourceInit(void *pCfg)
     gpio_pin_configure(RST_PIN, GPIO_OUTPUT);
 
     //set interrupt
-    gpio_pin_configure(INT_PIN, GPIO_INPUT);
+    gpio_pin_configure(INT_PIN, GPIO_INPUT | GPIO_PULL_UP);
     gpio_pin_interrupt_configure(INT_PIN, GPIO_INT_EDGE_FALLING);
     gpio_init_callback(&gpio_int_cb, gpio_int_callback, BIT(_INT_GPIO_PIN));
     gpio_add_callback(_INT_GPIO_PORT, &gpio_int_cb);
