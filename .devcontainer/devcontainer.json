@@ -18,9 +18,13 @@
 	// connected. This is typically a file mount in .devcontainer/docker-compose.yml
 	"workspaceFolder": "/workspaces/${localWorkspaceFolderBasename}",
 	// Required Extension
-	"extensions": [
-		"nordic-semiconductor.nrf-connect-extension-pack",
-	],
+	"customizations": {
+		"vscode": {
+			"extensions": [
+				"nordic-semiconductor.nrf-connect-extension-pack",		
+			]
+		}
+	},
 
 	// Features to add to the dev container. More info: https://containers.dev/features.
 	// "features": {},
