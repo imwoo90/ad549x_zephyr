@@ -11,7 +11,7 @@ config SQR_WAVE_VOLTAMMETRY
 
 config CHRONO_AMPEROMETRIC
     bool "ChronoAmperometric sample"
-    default n
+    default y
     help
         ChronoAmperometric sample https://github.com/analogdevicesinc/ad5940-examples/tree/master/examples/AD5940_ChronoAmperometric
 
