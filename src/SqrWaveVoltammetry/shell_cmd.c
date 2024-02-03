@@ -7,10 +7,6 @@
 extern uint32_t AppBuff[APPBUFF_SIZE];
 static int run_sqr_wave_cmd(const struct shell* shell, size_t argc, char **argv)
 {
-	// AD5940PlatformCfg();
-	AD5940RampStructInit();
-
-	//AD5940_McuSetLow();
 	AppSWVInit(AppBuff, APPBUFF_SIZE);    /* Initialize RAMP application. Provide a buffer, which is used to store sequencer commands */
 
 
