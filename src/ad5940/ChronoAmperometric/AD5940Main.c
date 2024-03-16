@@ -20,8 +20,6 @@ Analog Devices Software License Agreement.
 #include "math.h"
 #include "ChronoAmperometric.h"
 
-#define APPBUFF_SIZE 1000
-#define n 3
 #ifdef __ICCARM__
 #pragma location="never_retained_ram"
 #endif

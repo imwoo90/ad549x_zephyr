@@ -21,6 +21,8 @@ Analog Devices Software License Agreement.
 #include "string.h"
 #include "math.h"
 
+#define APPBUFF_SIZE 1000
+#define n 3
 #define DAC12BITVOLT_1LSB   (2200.0f/4095)  //mV
 #define DAC6BITVOLT_1LSB    (DAC12BITVOLT_1LSB*64)  //mV
 /* 

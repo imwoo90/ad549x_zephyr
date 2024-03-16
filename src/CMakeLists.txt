@@ -1,7 +1,8 @@
 target_sources(app PRIVATE
     main.c
-    ad5940ZephyrPort.c
+    gpio_interrupt_handler.cpp
 )
 
-add_subdirectory_ifdef(CONFIG_SQR_WAVE_VOLTAMMETRY SqrWaveVoltammetry)
-add_subdirectory_ifdef(CONFIG_CHRONO_AMPEROMETRIC ChronoAmperometric)
+add_subdirectory(ad5940)
+add_subdirectory(battery)
+add_subdirectory(UI)
