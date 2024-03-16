@@ -19,6 +19,7 @@ static void ad5940_main(void *, void *, void *)
 
 uint32_t MCUPlatformInit(void *pCfg)
 {
+  k_msleep(1000);
   return 1;
 }
 

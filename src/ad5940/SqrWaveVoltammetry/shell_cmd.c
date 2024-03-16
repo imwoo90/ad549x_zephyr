@@ -12,6 +12,7 @@ static int run_sqr_wave_cmd(const struct shell* shell, size_t argc, char **argv)
 
 	AD5940_Delay10us(100000);		/* Add a delay to allow sensor reach equilibrium befor starting the measurement */
 	AppSWVCtrl(APPCTRL_START, 0);          /* Control IMP measurement to start. Second parameter has no meaning with this command. */
+	return 0;
 }
 
 SHELL_CMD_REGISTER(run_sqr_wave, NULL, "run square wave", run_sqr_wave_cmd);

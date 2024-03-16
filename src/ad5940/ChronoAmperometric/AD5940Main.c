@@ -20,10 +20,11 @@ Analog Devices Software License Agreement.
 #include "math.h"
 #include "ChronoAmperometric.h"
 
+
 #ifdef __ICCARM__
 #pragma location="never_retained_ram"
 #endif
-uint32_t AppBuff[n][APPBUFF_SIZE];
+uint32_t AppBuff[_n][APPBUFF_SIZE];
 float LFOSCFreq;
 uint32_t IntCount = 0;
 /* It's your choice here what to do with the data. Here is just an example to print to UART */
@@ -128,7 +129,7 @@ void AD5940AMPStructInit(void)
 
 void AD5940_Main(void)
 {
-  uint32_t temp[n];
+  uint32_t temp[_n];
   AppCHRONOAMPCfg_Type *pAMPCfg;
   AppCHRONOAMPGetCfg(&pAMPCfg);
   AD5940PlatformCfg();
