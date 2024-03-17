@@ -1,6 +1,6 @@
 target_sources(app PRIVATE
     main.c
-    gpio_interrupt_handler.cpp
+    gpio_interrupt_handler.c
 )
 
 add_subdirectory(ad5940)

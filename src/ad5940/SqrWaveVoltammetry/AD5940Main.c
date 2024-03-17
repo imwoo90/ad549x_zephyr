@@ -15,6 +15,7 @@ Analog Devices Software License Agreement.
 
 *****************************************************************************/
 #include "SqrWaveVoltammetry.h"
+#include <ui.h>
 
 /**
    User could configure following parameters
@@ -41,6 +42,10 @@ static int32_t RampShowResult(float *pData, uint32_t DataCount)
     //printf("%.3f\n",pData[i]);
     //index++;
     //i += 10;  /* Print though UART consumes too much time. */
+  }
+
+  if (DataCount > 0) {
+    update_sensor_data(pData[DataCount/2], pData[DataCount-1]);
   }
   return 0;
 }
@@ -150,11 +155,11 @@ void AD5940_Main(void)
   AD5940RampStructInit();
 	
 	//AD5940_McuSetLow();
-  AppSWVInit(AppBuff, APPBUFF_SIZE);    /* Initialize RAMP application. Provide a buffer, which is used to store sequencer commands */
+  // AppSWVInit(AppBuff, APPBUFF_SIZE);    /* Initialize RAMP application. Provide a buffer, which is used to store sequencer commands */
 	
 	
-	AD5940_Delay10us(100000);		/* Add a delay to allow sensor reach equilibrium befor starting the measurement */
-  AppSWVCtrl(APPCTRL_START, 0);          /* Control IMP measurement to start. Second parameter has no meaning with this command. */
+	// AD5940_Delay10us(100000);		/* Add a delay to allow sensor reach equilibrium befor starting the measurement */
+  // AppSWVCtrl(APPCTRL_START, 0);          /* Control IMP measurement to start. Second parameter has no meaning with this command. */
 
   while(1)
   {

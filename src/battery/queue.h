@@ -2,7 +2,7 @@
 
 #include <stdbool.h>
 
-#define MAX_SIZE 20  // 큐의 최대 크기
+#define MAX_SIZE 200  // 큐의 최대 크기
 
 // 큐가 비어있는지 확인
 bool isEmpty();

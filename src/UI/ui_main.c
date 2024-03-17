@@ -12,15 +12,20 @@
 #include <zephyr/logging/log.h>
 LOG_MODULE_REGISTER(UI);
 
+#include "ui.h"
 #include "battery_status.ui.h"
+#include "mesurement_ui.h"
 
-typedef struct _display_data {
-    uint32_t battery_pptt;
-    double mid_data; //mid data of mesurement uA
-    double last_data; //last data of mesurement uA
-} display_data;
+DataLine mid;
+DataLine last;
 
+void update_sensor_data(float m, float l) {
+	if(last.label_value == NULL)
+		return;
 
+	update_data_line(&mid, m);
+	update_data_line(&last, l);
+}
 
 static void ui_main(void *, void *, void *) {
 	const struct device *display_dev;
@@ -40,6 +45,9 @@ static void ui_main(void *, void *, void *) {
 
     create_battery_status_ui(lv_scr_act());
     update_battery_status_ui(30, 1);
+
+	mid = create_data_line(lv_scr_act(), "M", 24);
+	last = create_data_line(lv_scr_act(), "L", 44);
 
 	while (1) {
 		lv_task_handler();

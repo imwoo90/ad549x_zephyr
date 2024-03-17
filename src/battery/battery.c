@@ -18,6 +18,7 @@
 
 #include "battery.h"
 #include "queue.h"
+#include "ui.h"
 
 LOG_MODULE_REGISTER(BATTERY, CONFIG_ADC_LOG_LEVEL);
 
@@ -79,6 +80,21 @@ static struct divider_data divider_data = {
 	.adc = DEVICE_DT_GET(DT_IO_CHANNELS_CTLR(ZEPHYR_USER)),
 #endif
 };
+
+static uint32_t g_batt_pptt = 0;
+uint32_t get_batt_pptt(void) {
+	return g_batt_pptt/100;
+}
+
+static bool g_is_charging;
+bool is_charging(void) {
+	return g_is_charging;
+}
+
+void set_charging_status(bool status) {
+	g_is_charging = status;
+	update_battery_status_ui(get_batt_pptt(), g_is_charging);
+}
 
 static int divider_setup(void)
 {
@@ -243,6 +259,7 @@ static void battery_main(void *, void *, void *) {
 		return ;
 	}
 
+	uint32_t prev_batt_pptt = 0;
 	int sum_of_moveing_average = 0;
 	while (true) {
 		int tmp_mV = battery_sample();
@@ -260,11 +277,13 @@ static void battery_main(void *, void *, void *) {
 			break;
 		}
 
-		unsigned int batt_pptt = battery_level_pptt(batt_mV, levels);
+		g_batt_pptt = battery_level_pptt(batt_mV, levels);
+		LOG_DBG("%d mV; %u pptt\n", batt_mV, g_batt_pptt);
 
-		LOG_DBG("%d mV; %u pptt\n", batt_mV, batt_pptt);
-
-		k_msleep(5000);
+		if (prev_batt_pptt/100 != get_batt_pptt())
+			update_battery_status_ui(get_batt_pptt(), g_is_charging);
+		prev_batt_pptt = g_batt_pptt;
+		k_msleep(500);
 	}
 	LOG_INF("Disable: %d\n", battery_measure_enable(false));
 }

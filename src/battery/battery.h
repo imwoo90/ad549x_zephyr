@@ -50,4 +50,8 @@ struct battery_level_point {
 unsigned int battery_level_pptt(unsigned int batt_mV,
 				const struct battery_level_point *curve);
 
+
+uint32_t get_batt_pptt(void);
+bool is_charging(void);
+void set_charging_status(bool status);
 #endif /* APPLICATION_BATTERY_H_ */

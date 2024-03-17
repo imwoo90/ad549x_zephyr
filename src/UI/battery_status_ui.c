@@ -38,6 +38,9 @@ void create_battery_status_ui(lv_obj_t* parent) {
 
 void update_battery_status_ui(int battery_level, bool is_charging) {
     BatteryStatusUI* ui = &g_battery_status_ui;
+    if (ui->percentage_label == NULL)
+        return;
+
     if (is_charging) {
         lv_obj_clear_flag(ui->charging_label, LV_OBJ_FLAG_HIDDEN);
     } else {

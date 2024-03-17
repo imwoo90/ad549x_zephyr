@@ -6,7 +6,7 @@
 
 #include <ad5940.h>
 
-K_THREAD_STACK_DEFINE(ad5940_main_stack, 2048);
+K_THREAD_STACK_DEFINE(ad5940_main_stack, 4096);
 struct k_thread ad5940_main_tid;
 
 /* Functions that used to initialize MCU platform */
@@ -30,6 +30,6 @@ uint32_t MCUPlatformInit(void *pCfg)
 	// sensor power on
 	gpio_pin_configure(DEVICE_DT_GET(DT_NODELABEL(gpio0)), 19, GPIO_OUTPUT);
   gpio_pin_set(DEVICE_DT_GET(DT_NODELABEL(gpio0)), 19, 1);
-  k_msleep(200);
+  k_msleep(1000);
   return 1;
 }

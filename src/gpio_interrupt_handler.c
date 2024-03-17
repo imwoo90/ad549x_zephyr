@@ -1,5 +1,6 @@
 #include <zephyr/kernel.h>
 #include <zephyr/device.h>
+#include <zephyr/shell/shell.h>
 #include <zephyr/drivers/gpio.h>
 #include <zephyr/input/input.h>
 
@@ -8,6 +9,21 @@
 
 #include <zephyr/logging/log.h>
 LOG_MODULE_REGISTER(ISR);
+
+#include <battery.h>
+
+K_SEM_DEFINE(sensor_work, 0, 1);
+
+static void isr_handler(void *, void *, void *) {
+
+    while(1) {
+        k_sem_take(&sensor_work, K_FOREVER);
+        shell_execute_cmd(NULL, "run_sqr_wave");
+    }
+}
+K_THREAD_DEFINE(isr_handler_tid, 2048,
+                isr_handler, NULL, NULL, NULL,
+                14, 0, 0);
 
 static void power_off(struct input_event *evt)  {
     // int rc = pm_device_action_run(cons, PM_DEVICE_ACTION_SUSPEND);
@@ -31,7 +47,11 @@ static void action_logical_low(struct input_event *evt) {
     case INPUT_KEY_0:
         break;
     case INPUT_KEY_1:
+        break;
     case INPUT_KEY_2:
+        set_charging_status(true);
+        break;
+    case INPUT_KEY_3:
         break;
     }
 }
@@ -43,7 +63,12 @@ static void action_logical_high(struct input_event *evt) {
         power_off(evt);
         break;
     case INPUT_KEY_1:
+        break;
     case INPUT_KEY_2:
+        set_charging_status(false);
+        break;
+    case INPUT_KEY_3:
+        k_sem_give(&sensor_work);
         break;
     }
 }

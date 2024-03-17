@@ -11,4 +11,3 @@
 #include <lvgl_input_device.h>
 
 void create_battery_status_ui(lv_obj_t* parent);
-void update_battery_status_ui(int battery_level, bool is_charging);
