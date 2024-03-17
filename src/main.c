@@ -5,12 +5,9 @@
 
 #include <zephyr/logging/log.h>
 LOG_MODULE_REGISTER(app);
-
-
 int main(void)
 {
 	while(1) {
-		LOG_INF("charge_in[%d]", gpio_pin_get(DEVICE_DT_GET(DT_NODELABEL(gpio0)), 30));
 		k_msleep(10000);
 	}
 	return 0;
@@ -44,10 +41,6 @@ int module_power_init(void) {
 	// led on
 	gpio_pin_configure(DEVICE_DT_GET(DT_NODELABEL(gpio0)), 12, GPIO_OUTPUT);
 	gpio_pin_set(DEVICE_DT_GET(DT_NODELABEL(gpio0)), 12, 1);
-
-	// sensor power on
-	gpio_pin_configure(DEVICE_DT_GET(DT_NODELABEL(gpio0)), 19, GPIO_OUTPUT);
-    gpio_pin_set(DEVICE_DT_GET(DT_NODELABEL(gpio0)), 19, 1);
 
 	// display power on
 	gpio_pin_configure(DEVICE_DT_GET(DT_NODELABEL(gpio0)), 17, GPIO_OUTPUT);

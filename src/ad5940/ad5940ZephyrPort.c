@@ -12,7 +12,7 @@
 #define _INT_GPIO_PIN 20
 #define INT_PIN _gpio(0, _INT_GPIO_PIN)
 
-const struct device *spi_dev = DEVICE_DT_GET(DT_NODELABEL(spi0));
+const struct device *spi_dev = DEVICE_DT_GET(DT_NODELABEL(spi1));
 
 K_MSGQ_DEFINE(run_int, 4, 30, 4);
 void gpio_int_callback(const struct device *dev, struct gpio_callback *cb, uint32_t pins) {

@@ -6,10 +6,13 @@
 
 #include <ad5940.h>
 
+K_THREAD_STACK_DEFINE(ad5940_main_stack, 2048);
+struct k_thread ad5940_main_tid;
+
 /* Functions that used to initialize MCU platform */
 uint32_t MCUPlatformInit(void *pCfg);
 
-static void ad5940_main(void *, void *, void *)
+void ad5940_main(void *, void *, void *)
 {
   extern void AD5940_Main(void);
   MCUPlatformInit(NULL);
@@ -17,12 +20,16 @@ static void ad5940_main(void *, void *, void *)
   AD5940_Main();
 }
 
-uint32_t MCUPlatformInit(void *pCfg)
-{
-  k_msleep(1000);
-  return 1;
+void create_ad5940_main(void) {
+  k_thread_create(&ad5940_main_tid, ad5940_main_stack, K_THREAD_STACK_SIZEOF(ad5940_main_stack), 
+          ad5940_main, NULL, NULL, NULL, 4, 0, K_NO_WAIT);
 }
 
-K_THREAD_DEFINE(ad5940_tid, 2048,
-                ad5940_main, NULL, NULL, NULL,
-                4, 0, 0);
+uint32_t MCUPlatformInit(void *pCfg)
+{
+	// sensor power on
+	gpio_pin_configure(DEVICE_DT_GET(DT_NODELABEL(gpio0)), 19, GPIO_OUTPUT);
+  gpio_pin_set(DEVICE_DT_GET(DT_NODELABEL(gpio0)), 19, 1);
+  k_msleep(200);
+  return 1;
+}
