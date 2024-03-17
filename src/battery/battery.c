@@ -191,11 +191,11 @@ int battery_sample(void)
 			if (dcp->output_ohm != 0) {
 				rc = val * (uint64_t)dcp->full_ohm
 					/ dcp->output_ohm;
-				LOG_INF("raw %u ~ %u mV => %d mV\n",
+				LOG_DBG("raw %u ~ %u mV => %d mV\n",
 					ddp->raw, val, rc);
 			} else {
 				rc = val;
-				LOG_INF("raw %u ~ %u mV\n", ddp->raw, val);
+				LOG_DBG("raw %u ~ %u mV\n", ddp->raw, val);
 			}
 		}
 	}
@@ -262,7 +262,7 @@ static void battery_main(void *, void *, void *) {
 
 		unsigned int batt_pptt = battery_level_pptt(batt_mV, levels);
 
-		LOG_INF("%d mV; %u pptt\n", batt_mV, batt_pptt);
+		LOG_DBG("%d mV; %u pptt\n", batt_mV, batt_pptt);
 
 		k_msleep(5000);
 	}

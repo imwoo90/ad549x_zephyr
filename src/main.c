@@ -8,6 +8,7 @@ LOG_MODULE_REGISTER(app);
 int main(void)
 {
 	while(1) {
+		LOG_INF("charge in [%d]", gpio_pin_get(DEVICE_DT_GET(DT_NODELABEL(gpio0)), 30));
 		k_msleep(10000);
 	}
 	return 0;

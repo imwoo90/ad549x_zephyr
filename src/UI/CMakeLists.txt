@@ -1,3 +1,4 @@
 target_sources(app PRIVATE
-    ui_main.cpp
+    battery_status_ui.c
+    ui_main.c
 )

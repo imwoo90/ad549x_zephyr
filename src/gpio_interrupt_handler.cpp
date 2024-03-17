@@ -20,7 +20,7 @@ static void power_off(struct input_event *evt)  {
     gpio_pin_configure(DEVICE_DT_GET(DT_NODELABEL(gpio0)), 19, GPIO_INPUT);
 
     gpio_pin_interrupt_configure(DEVICE_DT_GET(DT_NODELABEL(gpio0)), 29, GPIO_INT_LEVEL_ACTIVE);
-    gpio_pin_interrupt_configure(DEVICE_DT_GET(DT_NODELABEL(gpio0)), 30, GPIO_INT_LEVEL_ACTIVE);
+    gpio_pin_interrupt_configure(DEVICE_DT_GET(DT_NODELABEL(gpio0)), 30, GPIO_INT_EDGE_RISING);
 
     sys_poweroff();
 }
