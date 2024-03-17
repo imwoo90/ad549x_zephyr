@@ -4,5 +4,5 @@ target_sources(app PRIVATE
 )
 
 add_subdirectory(ad5940)
-add_subdirectory(battery)
-add_subdirectory(UI)
+add_subdirectory_ifdef(CONFIG_ADC battery)
+add_subdirectory_ifdef(CONFIG_DISPLAY UI)
