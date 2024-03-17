@@ -15,8 +15,8 @@ void create_battery_status_ui(lv_obj_t* parent) {
     ui->container = lv_obj_create(parent);
     // 스크롤을 무시하도록 설정
     lv_obj_clear_flag(ui->container, LV_OBJ_FLAG_SCROLLABLE);
-    lv_obj_set_width(ui->container, 128); // 컨테이너의 너비를 200px로 설정
-    lv_obj_set_height(ui->container, 24); // 컨테이너의 높이를 50px로 설정
+    lv_obj_set_width(ui->container, 128);
+    lv_obj_set_height(ui->container, 24);
     lv_obj_align(ui->container, LV_ALIGN_TOP_LEFT, 0, 0);
 
     ui->charging_label = lv_label_create(ui->container);
