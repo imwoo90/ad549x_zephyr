@@ -46,6 +46,10 @@ int32_t AMPShowResult(float *pData, uint32_t DataCount)
   {
     printf("index:%d, %f\n", index++, pData[i]);
   }
+
+  if (DataCount > 0) {
+    update_sensor_data(pData[DataCount/2], pData[DataCount-1]);
+  }
   return 0;
 }
 
