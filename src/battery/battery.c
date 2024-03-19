@@ -20,7 +20,7 @@
 #include "queue.h"
 #include "ui.h"
 
-LOG_MODULE_REGISTER(BATTERY, CONFIG_ADC_LOG_LEVEL);
+LOG_MODULE_REGISTER(BATTERY, 4);
 
 #define VBATT DT_PATH(vbatt)
 #define ZEPHYR_USER DT_PATH(zephyr_user)
@@ -125,7 +125,7 @@ static int divider_setup(void)
 	}
 
 	*asp = (struct adc_sequence){
-		.channels = BIT(0),
+		.channels = BIT(iocp->channel),
 		.buffer = &ddp->raw,
 		.buffer_size = sizeof(ddp->raw),
 		.oversampling = 4,
@@ -134,6 +134,7 @@ static int divider_setup(void)
 
 #ifdef CONFIG_ADC_NRFX_SAADC
 	*accp = (struct adc_channel_cfg){
+        .channel_id = iocp->channel,
 		.gain = BATTERY_ADC_GAIN,
 		.reference = ADC_REF_INTERNAL,
 		.acquisition_time = ADC_ACQ_TIME(ADC_ACQ_TIME_MICROSECONDS, 40),
