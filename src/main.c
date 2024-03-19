@@ -7,14 +7,10 @@
 LOG_MODULE_REGISTER(app);
 int main(void)
 {
-	extern void create_ad5940_main(void);
-	create_ad5940_main();
-	// extern void ad5940_main(void *, void *, void *);
-	// ad5940_main(NULL, NULL, NULL);
-	while(1) {
-		// LOG_INF("charge in [%d]", gpio_pin_get(DEVICE_DT_GET(DT_NODELABEL(gpio0)), 30));
-		k_msleep(10000);
-	}
+	// extern void create_ad5940_main(void);
+	// create_ad5940_main();
+	extern void ad5940_main(void *, void *, void *);
+	ad5940_main(NULL, NULL, NULL);
 	return 0;
 }
 

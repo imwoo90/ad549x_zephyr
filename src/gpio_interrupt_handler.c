@@ -19,6 +19,7 @@ static void isr_handler(void *, void *, void *) {
     while(1) {
         k_sem_take(&sensor_work, K_FOREVER);
         shell_execute_cmd(NULL, "run_sqr_wave");
+        shell_execute_cmd(NULL, "run_chrono_amperometric");
     }
 }
 K_THREAD_DEFINE(isr_handler_tid, 2048,
