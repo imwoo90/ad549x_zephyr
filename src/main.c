@@ -28,12 +28,21 @@ void led_toggle_point(void *, void *, void *){
 		return;
 	}
 
+	int cnt = 0;
 	while (1) {
-		ret = gpio_pin_toggle(DEVICE_DT_GET(DT_NODELABEL(gpio0)), 12);
-		if (ret < 0) {
+		if (cnt == 5) {
+			ret = gpio_pin_toggle(DEVICE_DT_GET(DT_NODELABEL(gpio0)), 12);
+			if (ret < 0) {
+				return;
+			}
+			cnt = 0;
+		}
+		if (gpio_pin_get(DEVICE_DT_GET(DT_NODELABEL(gpio0)), 30) == 1) {
+			power_off();
 			return;
 		}
-		k_msleep(500);
+		cnt+=1;
+		k_msleep(100);
 	}
 }
 
