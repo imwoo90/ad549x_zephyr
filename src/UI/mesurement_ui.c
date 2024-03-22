@@ -1,11 +1,5 @@
 #include "battery_status.ui.h"
-
-typedef struct {
-    lv_obj_t *container;    // 각 데이터 라인을 포함할 컨테이너
-    lv_obj_t *label_title;  // "MID" 또는 "LAST"
-    lv_obj_t *label_value;  // 데이터 값 uA
-} DataLine;
-
+#include "mesurement_ui.h"
 
 DataLine create_data_line(lv_obj_t* parent, const char* title, int y_offset) {
     DataLine line;
@@ -33,7 +27,7 @@ DataLine create_data_line(lv_obj_t* parent, const char* title, int y_offset) {
 }
 
 void update_data_line(DataLine* line, float value) {
-    lv_label_set_text_fmt(line->label_value, "%f", value);
+    lv_label_set_text_fmt(line->label_value, "%f uA", value);
 
     // // "uA" 단위 라벨을 컨테이너의 오른쪽 끝에 정렬
     // lv_obj_align(line->label_unit, LV_ALIGN_RIGHT_MID, 0, 0);

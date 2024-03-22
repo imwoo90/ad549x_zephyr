@@ -11,6 +11,7 @@
 LOG_MODULE_REGISTER(ISR);
 
 #include <battery.h>
+#include <ad5940_state.h>
 
 K_SEM_DEFINE(sensor_work, 0, 1);
 
@@ -22,7 +23,7 @@ static void isr_handler(void *, void *, void *) {
         shell_execute_cmd(NULL, "run_chrono_amperometric");
     }
 }
-K_THREAD_DEFINE(isr_handler_tid, 2048,
+K_THREAD_DEFINE(isr_handler_tid, 4096,
                 isr_handler, NULL, NULL, NULL,
                 14, 0, 0);
 
@@ -69,6 +70,8 @@ static void action_logical_high(struct input_event *evt) {
         set_charging_status(false);
         break;
     case INPUT_KEY_3:
+        if (get_ad5940_state() == AD5940_STATE_BUSY)
+            return;
         k_sem_give(&sensor_work);
         break;
     }

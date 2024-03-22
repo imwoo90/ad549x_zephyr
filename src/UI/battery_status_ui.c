@@ -15,9 +15,9 @@ void create_battery_status_ui(lv_obj_t* parent) {
     ui->container = lv_obj_create(parent);
     // 스크롤을 무시하도록 설정
     lv_obj_clear_flag(ui->container, LV_OBJ_FLAG_SCROLLABLE);
-    lv_obj_set_width(ui->container, 128);
+    lv_obj_set_width(ui->container, 88);
     lv_obj_set_height(ui->container, 24);
-    lv_obj_align(ui->container, LV_ALIGN_TOP_LEFT, 0, 0);
+    lv_obj_align(ui->container, LV_ALIGN_TOP_RIGHT, 0, 0);
 
     ui->charging_label = lv_label_create(ui->container);
     lv_label_set_text(ui->charging_label, LV_SYMBOL_CHARGE);
