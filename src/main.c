@@ -5,6 +5,9 @@
 
 #include <zephyr/logging/log.h>
 LOG_MODULE_REGISTER(app);
+
+extern void power_off();
+
 int main(void)
 {
 	// extern void create_ad5940_main(void);
@@ -39,6 +42,11 @@ K_THREAD_DEFINE(led_toggle_tid, 512,
                 10, 0, 0);
 
 int module_power_init(void) {
+	gpio_pin_configure(DEVICE_DT_GET(DT_NODELABEL(gpio0)), 30, GPIO_INPUT);
+	if (gpio_pin_get(DEVICE_DT_GET(DT_NODELABEL(gpio0)), 30) == 1) {
+		power_off();
+	}
+
 	// led on
 	gpio_pin_configure(DEVICE_DT_GET(DT_NODELABEL(gpio0)), 12, GPIO_OUTPUT);
 	gpio_pin_set(DEVICE_DT_GET(DT_NODELABEL(gpio0)), 12, 1);

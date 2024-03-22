@@ -27,7 +27,7 @@ K_THREAD_DEFINE(isr_handler_tid, 4096,
                 isr_handler, NULL, NULL, NULL,
                 14, 0, 0);
 
-static void power_off(struct input_event *evt)  {
+void power_off()  {
     // int rc = pm_device_action_run(cons, PM_DEVICE_ACTION_SUSPEND);
     // if (rc < 0) {
     // 	printf("Could not suspend console (%d)\n", rc);
@@ -38,7 +38,7 @@ static void power_off(struct input_event *evt)  {
     gpio_pin_configure(DEVICE_DT_GET(DT_NODELABEL(gpio0)), 19, GPIO_INPUT);
 
     gpio_pin_interrupt_configure(DEVICE_DT_GET(DT_NODELABEL(gpio0)), 29, GPIO_INT_LEVEL_ACTIVE);
-    gpio_pin_interrupt_configure(DEVICE_DT_GET(DT_NODELABEL(gpio0)), 30, GPIO_INT_EDGE_RISING);
+    // gpio_pin_interrupt_configure(DEVICE_DT_GET(DT_NODELABEL(gpio0)), 30, GPIO_INT_EDGE_RISING);
 
     sys_poweroff();
 }
@@ -62,9 +62,10 @@ static void action_logical_high(struct input_event *evt) {
     switch (evt->code)
     {
     case INPUT_KEY_0:
-        power_off(evt);
+        power_off();
         break;
     case INPUT_KEY_1:
+        power_off();
         break;
     case INPUT_KEY_2:
         set_charging_status(false);
