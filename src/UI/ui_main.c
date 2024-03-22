@@ -81,7 +81,6 @@ static void ui_main(void *, void *, void *) {
 	lv_obj_set_style_text_font(ad5940_state, &lv_font_montserrat_10, 0);
 
     create_battery_status_ui(lv_scr_act());
-    update_battery_status_ui(30, 1);
 
 	mid = create_data_line(lv_scr_act(), "M", 24);
 	last = create_data_line(lv_scr_act(), "L", 44);
@@ -93,7 +92,6 @@ static void ui_main(void *, void *, void *) {
 		k_msleep(50);
 	}
 }
-
 
 K_THREAD_DEFINE(ui_tid, 4096,
                 ui_main, NULL, NULL, NULL,

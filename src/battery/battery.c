@@ -259,7 +259,6 @@ static void battery_main(void *, void *, void *) {
 		return ;
 	}
 
-	uint32_t prev_batt_pptt = 0;
 	int sum_of_moveing_average = 0;
 	while (true) {
 		int tmp_mV = battery_sample();
@@ -280,9 +279,7 @@ static void battery_main(void *, void *, void *) {
 		g_batt_pptt = battery_level_pptt(batt_mV, levels);
 		LOG_DBG("%d mV; %u pptt\n", batt_mV, g_batt_pptt);
 
-		if (prev_batt_pptt/100 != get_batt_pptt())
-			update_battery_status(get_batt_pptt(), g_is_charging);
-		prev_batt_pptt = g_batt_pptt;
+		update_battery_status(get_batt_pptt(), g_is_charging);
 		k_msleep(500);
 	}
 	LOG_INF("Disable: %d\n", battery_measure_enable(false));
