@@ -20,7 +20,7 @@
 #include "queue.h"
 #include "ui.h"
 
-LOG_MODULE_REGISTER(BATTERY, 4);
+LOG_MODULE_REGISTER(BATTERY);
 
 #define VBATT DT_PATH(vbatt)
 #define ZEPHYR_USER DT_PATH(zephyr_user)
@@ -93,7 +93,7 @@ bool is_charging(void) {
 
 void set_charging_status(bool status) {
 	g_is_charging = status;
-	update_battery_status_ui(get_batt_pptt(), g_is_charging);
+	update_battery_status(get_batt_pptt(), g_is_charging);
 }
 
 static int divider_setup(void)
@@ -282,13 +282,13 @@ static void battery_main(void *, void *, void *) {
 		LOG_DBG("%d mV; %u pptt\n", batt_mV, g_batt_pptt);
 
 		if (prev_batt_pptt/100 != get_batt_pptt())
-			update_battery_status_ui(get_batt_pptt(), g_is_charging);
+			update_battery_status(get_batt_pptt(), g_is_charging);
 		prev_batt_pptt = g_batt_pptt;
 		k_msleep(500);
 	}
 	LOG_INF("Disable: %d\n", battery_measure_enable(false));
 }
 
-K_THREAD_DEFINE(battery_tid, 2048,
+K_THREAD_DEFINE(battery_tid, 4096,
                 battery_main, NULL, NULL, NULL,
                 10, 0, 0);

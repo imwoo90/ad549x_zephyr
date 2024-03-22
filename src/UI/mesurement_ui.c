@@ -3,8 +3,7 @@
 typedef struct {
     lv_obj_t *container;    // 각 데이터 라인을 포함할 컨테이너
     lv_obj_t *label_title;  // "MID" 또는 "LAST"
-    lv_obj_t *label_value;  // 데이터 값
-    lv_obj_t *label_unit;   // "uA"
+    lv_obj_t *label_value;  // 데이터 값 uA
 } DataLine;
 
 
@@ -24,30 +23,21 @@ DataLine create_data_line(lv_obj_t* parent, const char* title, int y_offset) {
     lv_obj_set_style_text_font(line.label_title, &lv_font_montserrat_16, 0);
     lv_obj_align(line.label_title, LV_ALIGN_LEFT_MID, 0, 0);
 
-    // "uA" 단위 라벨
-    line.label_unit = lv_label_create(line.container);
-    lv_label_set_text(line.label_unit, "uA");
-    lv_obj_set_style_text_font(line.label_unit, &lv_font_montserrat_16, 0);
-    lv_obj_align(line.label_unit, LV_ALIGN_RIGHT_MID, 0, 0);
-
     // 데이터 값 라벨
     line.label_value = lv_label_create(line.container);
-    lv_label_set_text(line.label_value, "0.000");
+    lv_label_set_text(line.label_value, "0 uA");
     lv_obj_set_style_text_font(line.label_value, &lv_font_montserrat_16, 0);
-    // 데이터 값 라벨을 "uA" 단위 라벨의 왼쪽에 정렬
-    lv_obj_align_to(line.label_value, line.label_unit, LV_ALIGN_OUT_LEFT_MID, -5, 0);
+    lv_obj_align(line.label_value, LV_ALIGN_RIGHT_MID, 0, 0);
 
     return line;
 }
 
 void update_data_line(DataLine* line, float value) {
-    char buf[16];
-    sprintf(buf, "%.3f", value);
-    lv_label_set_text(line->label_value, buf);
+    lv_label_set_text_fmt(line->label_value, "%f", value);
 
-    // "uA" 단위 라벨을 컨테이너의 오른쪽 끝에 정렬
-    lv_obj_align(line->label_unit, LV_ALIGN_RIGHT_MID, 0, 0);
+    // // "uA" 단위 라벨을 컨테이너의 오른쪽 끝에 정렬
+    // lv_obj_align(line->label_unit, LV_ALIGN_RIGHT_MID, 0, 0);
 
-    // 데이터 값 라벨을 "uA" 단위 라벨의 왼쪽에 정렬
-    lv_obj_align_to(line->label_value, line->label_unit, LV_ALIGN_OUT_LEFT_MID, -5, 0);
+    // // 데이터 값 라벨을 "uA" 단위 라벨의 왼쪽에 정렬
+    // lv_obj_align_to(line->label_value, line->label_unit, LV_ALIGN_OUT_LEFT_MID, -5, 0);
 }

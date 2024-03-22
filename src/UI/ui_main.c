@@ -16,15 +16,25 @@ LOG_MODULE_REGISTER(UI);
 #include "battery_status.ui.h"
 #include "mesurement_ui.h"
 
+K_MUTEX_DEFINE(lvgl_mutex);
+
 DataLine mid;
 DataLine last;
 
 void update_sensor_data(float m, float l) {
 	if(last.label_value == NULL)
 		return;
-
+	
+	k_mutex_lock(&lvgl_mutex, K_FOREVER);
 	update_data_line(&mid, m);
 	update_data_line(&last, l);
+	k_mutex_unlock(&lvgl_mutex);
+}
+
+void update_battery_status(int battery_level, bool is_charging) {
+	k_mutex_lock(&lvgl_mutex, K_FOREVER);
+	update_battery_status_ui(battery_level, is_charging);
+	k_mutex_unlock(&lvgl_mutex);
 }
 
 static void ui_main(void *, void *, void *) {
@@ -49,8 +59,12 @@ static void ui_main(void *, void *, void *) {
 	mid = create_data_line(lv_scr_act(), "M", 24);
 	last = create_data_line(lv_scr_act(), "L", 44);
 
+	update_sensor_data(-0.138948, -0.104211);
+
 	while (1) {
+		k_mutex_lock(&lvgl_mutex, K_FOREVER);
 		lv_task_handler();
+		k_mutex_unlock(&lvgl_mutex);
 		k_msleep(50);
 	}
 }

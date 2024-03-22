@@ -30,6 +30,6 @@ uint32_t MCUPlatformInit(void *pCfg)
 	// sensor power on
 	gpio_pin_configure(DEVICE_DT_GET(DT_NODELABEL(gpio0)), 19, GPIO_OUTPUT);
   gpio_pin_set(DEVICE_DT_GET(DT_NODELABEL(gpio0)), 19, 1);
-  k_msleep(1000);
+  k_msleep(200);
   return 1;
 }

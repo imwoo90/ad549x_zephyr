@@ -19,6 +19,7 @@ Analog Devices Software License Agreement.
 #include "string.h"
 #include "math.h"
 #include "ChronoAmperometric.h"
+#include <ui.h>
 
 #define INIT_VOLTAGE 1        /* 초기 전압 (V) */
 #define HIGH_VOLTAGE -0.3      /* 인가 전압 (V) */
@@ -48,6 +49,7 @@ int32_t AMPShowResult(float *pData, uint32_t DataCount)
   }
 
   if (DataCount > 0) {
+    printf("%f, %f\n", pData[DataCount/2], pData[DataCount-1]);
     update_sensor_data(pData[DataCount/2], pData[DataCount-1]);
   }
   return 0;
