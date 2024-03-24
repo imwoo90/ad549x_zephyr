@@ -38,7 +38,7 @@ void led_toggle_point(void *, void *, void *){
 			cnt = 0;
 		}
 		if (gpio_pin_get(DEVICE_DT_GET(DT_NODELABEL(gpio0)), 30) == 1) {
-			// power_off();
+			power_off();
 			return;
 		}
 		cnt+=1;
@@ -53,7 +53,7 @@ K_THREAD_DEFINE(led_toggle_tid, 512,
 int module_power_init(void) {
 	gpio_pin_configure(DEVICE_DT_GET(DT_NODELABEL(gpio0)), 30, GPIO_INPUT);
 	if (gpio_pin_get(DEVICE_DT_GET(DT_NODELABEL(gpio0)), 30) == 1) {
-		// power_off();
+		power_off();
 	}
 
 	// led on

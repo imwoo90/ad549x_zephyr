@@ -44,10 +44,17 @@ void power_off()  {
     sys_poweroff();
 }
 
+void power_off_work_handler(struct k_work *work) {
+    power_off();
+}
+
+K_WORK_DELAYABLE_DEFINE(power_off_work, power_off_work_handler);
+
 static void action_logical_low(struct input_event *evt) {
     switch (evt->code)
     {
     case INPUT_KEY_0:
+        k_work_cancel_delayable(&power_off_work);
         break;
     case INPUT_KEY_1:
         break;
@@ -63,7 +70,7 @@ static void action_logical_high(struct input_event *evt) {
     switch (evt->code)
     {
     case INPUT_KEY_0:
-        power_off();
+        k_work_schedule(&power_off_work, K_MSEC(1000));
         break;
     case INPUT_KEY_1:
         break;
