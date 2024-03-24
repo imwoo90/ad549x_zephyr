@@ -40,6 +40,7 @@ void power_off()  {
     gpio_pin_interrupt_configure(DEVICE_DT_GET(DT_NODELABEL(gpio0)), 29, GPIO_INT_LEVEL_ACTIVE);
     // gpio_pin_interrupt_configure(DEVICE_DT_GET(DT_NODELABEL(gpio0)), 30, GPIO_INT_EDGE_RISING);
 
+    gpio_pin_set(DEVICE_DT_GET(DT_NODELABEL(gpio0)), 28, 0);
     k_busy_wait(1000*100);
     sys_poweroff();
 }

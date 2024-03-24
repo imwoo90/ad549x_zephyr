@@ -51,6 +51,10 @@ K_THREAD_DEFINE(led_toggle_tid, 512,
                 14, 0, 0);
 
 int module_power_init(void) {
+	// power_off pin
+	gpio_pin_configure(DEVICE_DT_GET(DT_NODELABEL(gpio0)), 28, GPIO_OUTPUT);
+	gpio_pin_set(DEVICE_DT_GET(DT_NODELABEL(gpio0)), 28, 1);
+
 	gpio_pin_configure(DEVICE_DT_GET(DT_NODELABEL(gpio0)), 30, GPIO_INPUT);
 	if (gpio_pin_get(DEVICE_DT_GET(DT_NODELABEL(gpio0)), 30) == 1) {
 		power_off();
